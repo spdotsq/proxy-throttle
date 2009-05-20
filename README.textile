@@ -14,6 +14,7 @@ h1. Throttling controls:
 
 * By clients: we can uniquely identify each client (you specify the identifier or we use the IP).
 * By API methods
+* Ban ability
 
 h1. Config sample
 
