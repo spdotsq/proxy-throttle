@@ -1,0 +1,29 @@
+= How to throttle?
+
+* time based throttling: 15 API calls in our hour
+* interval based throttling: 15 API calls in 40 seconds
+* # intelligent throttling
+* # be nice throttling
+* # entire set throttling (?)
+
+= Sets theory:
+
+A set of clients: we can uniquely identify each client (you specify the identifier or we select it's IP).
+A set of API methods: on a macro level this set does not exist
+
+Storage options: memcache or Tokyo Cabinet.
+
+# Cron based time and date.
+
+throttle <rule name>:
+  time: 
+  duration: one hour
+  limit: 100
+  client:
+    identifier: <request.IP>
+    
+throttle <rule name>:
+  from: 
+  to: 
+  volume: 
+  duration: one hour
