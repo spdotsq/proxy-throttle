@@ -1,4 +1,8 @@
-= How to throttle?
+h1. About
+
+A proxy to throttle API calls. This is a work in progress, it should not be run in production.
+
+h1. How to throttle?
 
 * time based throttling: 15 API calls in our hour
 * interval based throttling: 15 API calls in 40 seconds
@@ -6,16 +10,14 @@
 * # be nice throttling
 * # entire set throttling (?)
 
-= Sets theory:
+h1. Throttling controls:
 
-A set of clients: we can uniquely identify each client (you specify the identifier or we select it's IP).
-A set of API methods: on a macro level this set does not exist
+* By clients: we can uniquely identify each client (you specify the identifier or we use the IP).
+* By API methods
 
-Storage options: memcache or Tokyo Cabinet.
+h1. Config sample
 
-# Cron based time and date.
-
-throttle <rule name>:
+<pre>throttle <rule name>:
   time: 
   duration: one hour
   limit: 100
@@ -27,3 +29,4 @@ throttle <rule name>:
   to: 
   volume: 
   duration: one hour
+</pre>
