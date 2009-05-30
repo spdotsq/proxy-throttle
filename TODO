@@ -1,3 +1,35 @@
 * Strict rule arguments checking (sp.sq)
 * Storage class for redis (sp.sq)
 * Set expiry for rule
+* Fix exception:
+"by_ip_limit_reactions_endpoint__"
+localhost:6379 DEAD (SocketError: getaddrinfo: nodename nor servname provided, or not known), will retry at 2009-05-30 23:09:54 +0300
+Errno::ECONNREFUSED: Connection refused
+	/opt/local/lib/ruby/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:59:in `rescue in with_socket_management'
+	/opt/local/lib/ruby/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:48:in `with_socket_management'
+	/opt/local/lib/ruby/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:135:in `write'
+	/opt/local/lib/ruby/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:197:in `get'
+	/opt/local/lib/ruby/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:193:in `[]'
+	/Users/spartansquirrel/Sites/proxy-throttle/lib/throttle.rb:35:in `throttle'
+	/Users/spartansquirrel/Sites/proxy-throttle/lib/throttle.rb:21:in `block in call'
+	/Users/spartansquirrel/Sites/proxy-throttle/lib/throttle.rb:19:in `each'
+	/Users/spartansquirrel/Sites/proxy-throttle/lib/throttle.rb:19:in `call'
+	/opt/local/lib/ruby/gems/1.9.0/gems/rack-1.0.0/lib/rack/commonlogger.rb:20:in `_call'
+	/opt/local/lib/ruby/gems/1.9.0/gems/rack-1.0.0/lib/rack/commonlogger.rb:13:in `call'
+	/opt/local/lib/ruby/gems/1.9.0/gems/rack-1.0.0/lib/rack/showexceptions.rb:24:in `call'
+	/opt/local/lib/ruby/gems/1.9.0/gems/rack-1.0.0/lib/rack/content_length.rb:13:in `call'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:76:in `block in pre_process'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:74:in `catch'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:74:in `pre_process'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:57:in `process'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:42:in `receive_data'
+	/opt/local/lib/ruby/gems/1.9.0/gems/eventmachine-0.12.8/lib/eventmachine.rb:242:in `run_machine'
+	/opt/local/lib/ruby/gems/1.9.0/gems/eventmachine-0.12.8/lib/eventmachine.rb:242:in `run'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/backends/base.rb:57:in `start'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/server.rb:156:in `start'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/controllers/controller.rb:80:in `start'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/runner.rb:174:in `run_command'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/lib/thin/runner.rb:140:in `run!'
+	/opt/local/lib/ruby/gems/1.9.0/gems/thin-1.2.2/bin/thin:6:in `<top (required)>'
+	/opt/local/bin/thin:19:in `load'
+	/opt/local/bin/thin:19:in `<main>'

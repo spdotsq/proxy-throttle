@@ -16,26 +16,19 @@ class Throttle
   
   def call(environment)
     request = Rack::Request.new(environment)
-    
-    @rules.each do |name, rule|
+    @rules.each do |rule|
       if rule.match(request)
-        return limit_exceeded unless throttle(request, rule, name)
+        return limit_exceeded unless throttle(request, rule)
       end
     end
     
     @app.call(env)
   end
   
-  def throttle(request, rule, name = '')
-    # Create the unique client identifier
-    client_identifier = request.ip
-    # Create the unique request identifier
-    key = "#{name}_#{client_identifier}_#{timekey(rule)}"
-    p key
-    # Apply the rule
-    return false if @redis[key].to_i >= rule['limit']
+  def throttle(request, rule)
+    key = rule.requestkey(request)
+    return false if rule.exceeds(@redis[key].to_i)
     @redis.incr(key) #TODO increment only if succeded
-    # @redis.expire(key, )
 
     return true
   end
