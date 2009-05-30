@@ -54,7 +54,7 @@ class Rule
   end
   
   def exceeds(value)
-    return value >= @rule.limit
+    return value >= @limit
   end
   
   def requestkey(request)

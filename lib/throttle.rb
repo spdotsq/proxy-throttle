@@ -22,7 +22,7 @@ class Throttle
       end
     end
     
-    @app.call(env)
+    @application.call(environment)
   end
   
   def throttle(request, rule)
