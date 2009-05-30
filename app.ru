@@ -1,11 +1,15 @@
+require 'yaml'
+
 require 'lib/proxy'
 require 'lib/throttle'
 
 use Rack::ContentLength
 # use Rack::Lint
-# use Rack::ShowExceptions
-# use Rack::CommonLogger
+use Rack::ShowExceptions
+use Rack::CommonLogger
 
-use Throttle
+configuration = YAML.load_file('configuration/environment.yml')
 
-run Proxy.new
+use Throttle, configuration['throttler']
+
+run Proxy.new(configuration['backend'])

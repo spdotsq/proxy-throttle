@@ -4,7 +4,7 @@ A proxy to throttle API calls. This is a work in progress, it should not be run 
 
 h1. How to throttle?
 
-* time based throttling: 15 API calls in our hour
+* time based throttling: 15 API calls per hour
 * interval based throttling: 15 API calls in 40 seconds
 * # intelligent throttling
 * # be nice throttling
@@ -12,22 +12,23 @@ h1. How to throttle?
 
 h1. Throttling controls:
 
-* By clients: we can uniquely identify each client (you specify the identifier or we use the IP).
+* By clients: we can uniquely identify each client (you specify the identifier or use the IP).
 * By API methods
 * Ban ability
 
 h1. Config sample
 
-<pre>throttle <rule name>:
-  time: 
-  duration: one hour
-  limit: 100
-  client:
-    identifier: <request.IP>
-    
-throttle <rule name>:
-  from: 
-  to: 
-  volume: 
-  duration: one hour
+<pre>backend:
+  host: 127.0.0.1
+  port: 3001
+
+throttler:
+  rules:
+    <rule name>:
+      endpoint: '.*'
+      limit: 5
+      request:
+        identifier: [:request_method]
+      client:
+        identifier: [:ip]
 </pre>
