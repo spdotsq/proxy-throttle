@@ -2,6 +2,7 @@ $:.unshift File.join(File.dirname(__FILE__))
 require 'backend'
 
 class Proxy
+  
   def initialize(opts)
     @opts = opts
     @proxy = Backend.new(:host => opts['host'], :port => opts['port'].to_i)
@@ -22,4 +23,5 @@ class Proxy
   rescue
     [500, {'Content-Type' => 'text/plain'}, ["Error"]]
   end
+  
 end

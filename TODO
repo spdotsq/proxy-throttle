@@ -1,0 +1,3 @@
+* Strict rule arguments checking (sp.sq)
+* Storage class for redis (sp.sq)
+* Set expiry for rule

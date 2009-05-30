@@ -1,19 +1,24 @@
 require 'redis'
+require 'rule'
 
 class Throttle
-  def initialize(app, opts={})
-    @app = app
-    @opts = {:per_hour => 3, :key_field => 'apikey'}.merge(opts)
+  
+  def initialize(application, options={})
+    @application = application
+    @options = options
     @redis = Redis.new
+    # Initialize rules
+    @rules = []
+    @options['rules'].each do |name, rule|
+      @rules << Rule.new(name, rule)
+    end
   end
   
-  def call(env)
-    request = Rack::Request.new(env)
+  def call(environment)
+    request = Rack::Request.new(environment)
     
-    
-    @opts['rules'].each do |name, rule|
-      if request.fullpath.match(rule['endpoint'])
-        p "Matched rule #{name}"
+    @rules.each do |name, rule|
+      if rule.match(request)
         return limit_exceeded unless throttle(request, rule, name)
       end
     end
@@ -23,16 +28,14 @@ class Throttle
   
   def throttle(request, rule, name = '')
     # Create the unique client identifier
-    client_identifier = request.ip #if rule['client']['identifier'] == :ip
+    client_identifier = request.ip
     # Create the unique request identifier
-    request_identifier = request.request_method # if ...
-    # Check the db for the key
-    p key = "#{name}_#{client_identifier}_#{request_identifier}_" +
-        "#{Time.now.strftime("%Y-%m-%d")}"
+    key = "#{name}_#{client_identifier}_#{timekey(rule)}"
+    p key
     # Apply the rule
-    p @redis[key]
     return false if @redis[key].to_i >= rule['limit']
     @redis.incr(key) #TODO increment only if succeded
+    # @redis.expire(key, )
 
     return true
   end
