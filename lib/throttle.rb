@@ -6,10 +6,10 @@ class Throttle
   def initialize(application, options={})
     @application = application
     @options = options
-    @redis = Redis.new
+    @redis = Redis.new({:host => options['storage'][options['storage'].keys[0]]['host'], :port => options['storage'][options['storage'].keys[0]]['port']})
     # Initialize rules
     @rules = []
-    @options['rules'].each do |name, rule|
+    @options['throttler']['rules'].each do |name, rule|
       @rules << Rule.new(name, rule)
     end
   end

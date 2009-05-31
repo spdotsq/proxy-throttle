@@ -10,6 +10,6 @@ use Rack::CommonLogger
 
 configuration = YAML.load_file('configuration/environment.yml')
 
-use Throttle, configuration['throttler']
+use Throttle, configuration
 
 run Proxy.new(configuration['backend'])
