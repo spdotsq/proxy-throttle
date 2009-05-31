@@ -27,6 +27,7 @@ class Throttle
   
   def throttle(request, rule)
     key = rule.requestkey(request)
+    p key
     return false if rule.exceeds(@redis[key].to_i)
     @redis.incr(key) #TODO increment only if succeded
 

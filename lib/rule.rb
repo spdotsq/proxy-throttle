@@ -22,6 +22,7 @@ class Rule
   end
   
   def clientkey(request)
+    return request.ip
     # key = ""
     # if not @clientkeys
     #   # Set the clientkeys here first or 
@@ -40,17 +41,15 @@ class Rule
     #   end
     # end
     # return key
-    return ""
   end
   
   def timekey(request)
-    # if @options['time'] == 'day'
-    #   return Time.now.strftime("%Y-%m-%d")
-    # end
-    # if @options['time'] == 'hour'
-    #   return Time.now.strftime("%Y-%m-%d-%H")
-    # end
-    return ""
+    if @options['time'] == 'day'
+      return Time.now.strftime('%Y-%m-%d')
+    end
+    if @options['time'] == 'hour'
+      return Time.now.strftime('%Y-%m-%d-%H')
+    end
   end
   
   def exceeds(value)
