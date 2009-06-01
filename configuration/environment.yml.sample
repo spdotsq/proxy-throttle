@@ -1,13 +1,12 @@
-storage:
-  redis:
-    host: 0.0.0.0
-    port: 6379
-
 backend:
   host: 75.101.138.248
   port: 80
   
 throttler:
+  storage:
+    redis:
+      host: 0.0.0.0
+      port: 6379
   rules:
     by_ip_limit_all_to_100_requests_daily:
       endpoint: '.*'
