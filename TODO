@@ -4,3 +4,35 @@
 * Bug: it seems that if you restart redis while
   the server is working, the next requests
   get hanged up.
+  
+* Bug:
+RedisError: Unknown response..
+	/var/lib/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:478:in `get_response'
+	/var/lib/gems/1.9.0/gems/ezmobius-redis-0.0.3.4/lib/redis.rb:198:in `get'
+	/root/throttler/proxy-throttle/lib/storage/default.rb:15:in `get'
+	/root/throttler/proxy-throttle/lib/throttle.rb:30:in `throttle'
+	/root/throttler/proxy-throttle/lib/throttle.rb:21:in `block in call'
+	/root/throttler/proxy-throttle/lib/throttle.rb:19:in `each'
+	/root/throttler/proxy-throttle/lib/throttle.rb:19:in `call'
+	/var/lib/gems/1.9.0/gems/rack-1.0.0/lib/rack/commonlogger.rb:20:in `_call'
+	/var/lib/gems/1.9.0/gems/rack-1.0.0/lib/rack/commonlogger.rb:13:in `call'
+	/var/lib/gems/1.9.0/gems/rack-1.0.0/lib/rack/showexceptions.rb:24:in `call'
+	/var/lib/gems/1.9.0/gems/rack-1.0.0/lib/rack/content_length.rb:13:in `call'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:76:in `block in pre_process'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:74:in `catch'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:74:in `pre_process'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:57:in `process'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/connection.rb:42:in `receive_data'
+	/var/lib/gems/1.9.0/gems/eventmachine-0.12.8/lib/eventmachine.rb:242:in `run_machine'
+	/var/lib/gems/1.9.0/gems/eventmachine-0.12.8/lib/eventmachine.rb:242:in `run'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/backends/base.rb:57:in `start'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/server.rb:156:in `start'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/controllers/controller.rb:80:in `start'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/runner.rb:174:in `run_command'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/lib/thin/runner.rb:140:in `run!'
+	/var/lib/gems/1.9.0/gems/thin-1.2.2/bin/thin:6:in `<main>'
+86.121.31.206 - - [01/Jun/2009 09:37:43] "GET /favicon.ico HTTP/1.1" 5
+
+When the response is 404 i believe.
+
+Without error logging we get quota excedeed.
