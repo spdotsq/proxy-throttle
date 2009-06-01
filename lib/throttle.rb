@@ -1,4 +1,4 @@
-require 'redis'
+require 'storage'
 require 'rule'
 
 class Throttle
@@ -6,10 +6,10 @@ class Throttle
   def initialize(application, options={})
     @application = application
     @options = options
-    @redis = Redis.new({:host => options['storage'][options['storage'].keys[0]]['host'], :port => options['storage'][options['storage'].keys[0]]['port']})
+    @storage = Storage.connect(options['storage'].keys[0], options['storage'][options['storage'].keys[0]])
     # Initialize rules
     @rules = []
-    @options['throttler']['rules'].each do |name, rule|
+    @options['rules'].each do |name, rule|
       @rules << Rule.new(name, rule)
     end
   end
@@ -27,9 +27,9 @@ class Throttle
   
   def throttle(request, rule)
     key = rule.requestkey(request)
-    p key
-    return false if rule.exceeds(@redis[key].to_i)
-    @redis.incr(key) #TODO increment only if succeded
+    value = @storage.get(key)
+    return false if rule.exceeds(value.to_i)
+    @storage.incr(key) #TODO: increment only if succeded
 
     return true
   end
