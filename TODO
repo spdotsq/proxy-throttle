@@ -35,4 +35,9 @@ RedisError: Unknown response..
 
 When the response is 404 i believe.
 
-Without error logging we get quota excedeed.
+* Without error logging we get quota excedeed.
+
+* support head! or any kind of request method (maybe the next proxy understands it) <=>
+send everything you receive.
+
+* downtime ... if it's scheduled ... maybe they can't go to the proxy again.
