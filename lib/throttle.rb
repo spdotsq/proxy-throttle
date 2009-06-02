@@ -28,6 +28,10 @@ class Throttle
   def throttle(request, rule)
     key = rule.requestkey(request)
     value = @storage.get(key)
+    if value.nil?
+      value = "0"
+      @storage.touch(key)
+    end
     return false if rule.exceeds(value.to_i)
     @storage.incr(key) #TODO: increment only if succeded
 

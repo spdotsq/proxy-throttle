@@ -23,4 +23,7 @@ class Storage::Default
     return @connection.incr(key)
   end
   
+  def touch(key)
+  end
+  
 end
