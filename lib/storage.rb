@@ -5,6 +5,9 @@ module Storage
     case system
     when 'redis'
       require 'storage/redis'
+      options.each do |key, value|
+        options[key.to_sym] = value
+      end
       return Storage::Redis.new(options)
     when 'memcache'
       require 'storage/memcache'

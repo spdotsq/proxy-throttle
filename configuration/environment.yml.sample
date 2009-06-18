@@ -1,3 +1,5 @@
+environment: development
+
 backend:
   host: 75.101.138.248
   port: 80

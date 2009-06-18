@@ -4,8 +4,11 @@ require 'redis'
 class Storage::Redis < Storage::Default
   
   def connect()
-    p @options
     return Redis.new(@options)
+  end
+  
+  def reconnect()
+    return connect()
   end
   
 end
