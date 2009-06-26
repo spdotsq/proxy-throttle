@@ -6,8 +6,6 @@ class Throttle
   def initialize(application, options={})
     @application = application
     @options = options
-    @storage = Storage.connect(@options['storage'].keys[0], 
-        @options['storage'][options['storage'].keys[0]])
     # Initialize rules
     @rules = []
     @options['rules'].each do |name, rule|
@@ -17,6 +15,8 @@ class Throttle
   
   def call(environment)
     request = Rack::Request.new(environment)
+    @storage = Storage.connect(@options['storage'].keys[0], 
+        @options['storage'][@options['storage'].keys[0]])
     @rules.each do |rule|
       if rule.match(request)
         return limit_exceeded unless throttle(request, rule)
