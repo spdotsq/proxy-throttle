@@ -22,3 +22,4 @@ throttler:
       time: hour
       client:
         identifier: ['ip']
+    allowed_ips: [127.0.0.1]

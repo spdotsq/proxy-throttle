@@ -15,11 +15,20 @@ class Throttle
   
   def call(environment)
     request = Rack::Request.new(environment)
-    @storage = Storage.connect(@options['storage'].keys[0], 
-        @options['storage'][@options['storage'].keys[0]])
-    @rules.each do |rule|
-      if rule.match(request)
-        return limit_exceeded unless throttle(request, rule)
+    apply_rules = true
+    if !@options['allowed_ips'].nil? && @options['allowed_ips'].length > 0
+      if @options['allowed_ips'].include?(request.env['REMOTE_ADDR'])
+        apply_rules = false
+      end
+    end
+    
+    if apply_rules
+      @storage = Storage.connect(@options['storage'].keys[0], 
+          @options['storage'][@options['storage'].keys[0]])
+      @rules.each do |rule|
+        if rule.match(request)
+          return limit_exceeded unless throttle(request, rule)
+        end
       end
     end
     
